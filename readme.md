@@ -17,3 +17,10 @@ This project analyzes COVID-era mortality shock and its implications for life in
 - `scripts/`: R scripts
 - `outputs/`: figures and tables
 - `report/`: final actuarial-style report
+
+
+### Baseline Comparison
+
+Excess mortality in 2020 was compared against two baselines: the long-term average (2000–2019) and a recent pre-pandemic average (2015–2019). 
+
+Relative to the long-term baseline, the increase in mortality appears modest. However, compared with the recent baseline, the mortality rise in 2020 becomes much more evident. This likely reflects the long-term decline in mortality over the past two decades, meaning older historical data may partially dilute the observed COVID-era mortality shock.
