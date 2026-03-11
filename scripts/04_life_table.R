@@ -44,7 +44,40 @@ life_data <- life_data %>%
 
 head(life_data)
 
-write_csv(life_data, "data/processed/life_table_2019_female.csv")
+write_csv(life_data, "data/processed/life_table_2019_female_basic.csv")
 
 # some possible extra work 
+
+# Construct l(x+1) for Lx calculation
+life_data <- life_data %>%
+  mutate(
+    lx_next = lead(lx)
+  )
+
+# Construct Lx
+# For the last age, use a simple approximation: Lx = lx / 2
+life_data <- life_data %>%
+  mutate(
+    Lx = if_else(is.na(lx_next), lx / 2, (lx + lx_next) / 2)
+  )
+
+# Construct Tx from bottom to top
+life_data$Tx <- rev(cumsum(rev(life_data$Lx)))
+
+# Construct ex
+life_data <- life_data %>%
+  mutate(
+    ex = Tx / lx
+  )
+
+# Keep final columns
+life_table <- life_data %>%
+  select(age, qx, px, lx, dx, Lx, Tx, ex)
+
+# Inspect results
+glimpse(life_table)
+head(life_table)
+summary(life_table)
+
+write_csv(life_table, "data/processed/life_table_2019_female.csv")
 
