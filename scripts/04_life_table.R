@@ -84,11 +84,9 @@ write_csv(life_table, "data/processed/life_table_2019_female_with_LxTxex.csv")
 
 build_life_table <- function(data, year_value, sex_value){
   
-  mort_data <- data %>%
+  life_data <- data %>%
     filter(Year == year_value, sex == sex_value) %>%
-    arrange(age)
-  
-  life_data <- mort_data %>%
+    arrange(age) %>%
     select(age, qx) %>%
     mutate(px = 1 - qx)
   
