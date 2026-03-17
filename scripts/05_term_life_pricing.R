@@ -83,3 +83,20 @@ print(pricing_summary)
 # Save result
 write_csv(pricing_summary,
           "data/processed/term_life_pricing_comparison.csv")
+
+
+ggplot(pricing_summary,
+       aes(x = scenario, y = NSP)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Net Single Premium Comparison",
+    x = "Scenario",
+    y = "NSP"
+  )
+ggplot(pricing_summary,
+       aes(x = scenario, y = pct_change_vs_baseline)) +
+  geom_col(fill = "orange") +
+  labs(
+    title = "NSP Increase Due to Stress",
+    y = "Percentage Change"
+  )
