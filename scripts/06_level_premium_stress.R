@@ -233,9 +233,12 @@ write_csv(
   level_premium_summary,
   "data/processed/level_premium_stress_comparison.csv"
 )
+#avoid error
+if(!dir.exists("outputs")){
+  dir.create("outputs")
+}
 
-
-ggplot(level_premium_summary,
+p_lp <- ggplot(level_premium_summary,
        aes(x = scenario, y = level_premium, fill = sex)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
@@ -244,13 +247,32 @@ ggplot(level_premium_summary,
     y = "Level Premium"
   )
 
-ggplot(level_premium_summary,
+
+
+p_lp_pct <- ggplot(level_premium_summary,
        aes(x = scenario, y = pct_change_vs_baseline, fill = sex)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
     title = "Percentage Change in Premium vs Baseline",
     y = "Percent Change"
   )
+
+ggsave(
+  "outputs/level_premium.png",
+  plot = p_lp,
+  width = 8,
+  height = 5,
+  dpi = 300
+)
+
+
+ggsave(
+  "outputs/level_premium_pct.png",
+  plot = p_lp_pct,
+  width = 8,
+  height = 5,
+  dpi = 300
+)
 
 baseline_f <- life_2019_f %>%
   filter(age >= issue_age, age < issue_age + term) %>%
@@ -267,7 +289,7 @@ df_plot <- tibble(
   temporary_stress = ifelse(0:(term - 1) < stress_years, stress_f$qx, baseline_f$qx)
 )
 
-ggplot(df_plot, aes(x = t)) +
+p_mort <- ggplot(df_plot, aes(x = t)) +
   geom_line(aes(y = baseline, color = "baseline"), linewidth = 1) +
   geom_line(aes(y = full_stress, color = "stress"), linewidth = 1) +
   geom_line(aes(y = temporary_stress, color = "temporary"), linewidth = 1) +
@@ -277,3 +299,11 @@ ggplot(df_plot, aes(x = t)) +
     y = "Mortality Rate",
     color = "Scenario"
   )
+
+ggsave(
+  "outputs/mortality_path.png",
+  plot = p_mort,
+  width = 8,
+  height = 5,
+  dpi = 300
+)
