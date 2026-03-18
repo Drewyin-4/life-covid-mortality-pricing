@@ -84,8 +84,12 @@ print(pricing_summary)
 write_csv(pricing_summary,
           "data/processed/term_life_pricing_comparison.csv")
 
+# aviod error
+if(!dir.exists("outputs")){
+  dir.create("outputs")
+}
 
-ggplot(pricing_summary,
+p_nsp <- ggplot(pricing_summary,
        aes(x = scenario, y = NSP)) +
   geom_col(fill = "steelblue") +
   labs(
@@ -93,10 +97,28 @@ ggplot(pricing_summary,
     x = "Scenario",
     y = "NSP"
   )
-ggplot(pricing_summary,
+
+ggsave(
+  "outputs/nsp_comparison.png",
+  plot = p_nsp,
+  width = 8,
+  height = 5,
+  dpi = 300
+)
+
+
+p_nsp_pct <- ggplot(pricing_summary,
        aes(x = scenario, y = pct_change_vs_baseline)) +
   geom_col(fill = "orange") +
   labs(
     title = "NSP Increase Due to Stress",
     y = "Percentage Change"
   )
+
+ggsave(
+  "outputs/nsp_pct_change.png",
+  plot = p_nsp_pct,
+  width = 8,
+  height = 5,
+  dpi = 300
+)
