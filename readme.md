@@ -1,26 +1,26 @@
-# Life COVID Mortality Pricing
+# Life Insurance Pricing & PRT Extension
+Actuarial pricing project built in R using U.S. mortality data from CDC WONDER (1999–2020).
 
-This project analyzes COVID-era mortality shock and its implications for life insurance pricing using U.S. mortality data from CDC WONDER.
+## What this project covers
+**Scripts 01–06: Term life pricing and mortality stress testing**
+- Construct life tables from CDC mortality data by age, sex, and year
+- Price a 20-year term life product under baseline (2019) and COVID stress (2020) mortality
+- Stress test results: male NSP increased ~20.9%, female ~16.7% under a one-year mortality shock
+- Model temporary stress scenarios including an exponential decay approach
 
-## Project Goals
-- Study mortality changes before and during COVID
-- Construct mortality rates by age and year
-- Build actuarial life tables
-- Evaluate the impact on term life insurance pricing
+**Script 07: Extension into PRT (Pension Risk Transfer) context**
+- Convert term life pricing logic into whole life annuity pricing
+- Price a synthetic group census (15 participants) to approximate a PRT transaction
+- Interest rate sensitivity analysis (i = 2% to 5%)
+- Modified duration and convexity of the group annuity liability
 
-## Data Source
-- CDC WONDER Multiple Cause of Death data
+Key insight: term life and annuity pricing go in opposite directions under a mortality shock. Higher mortality increases term life premiums but reduces annuity liability — because annuitants collect for fewer years.
 
-## Project Structure
-- `data/raw/`: raw downloaded data
-- `data/processed/`: cleaned datasets
-- `scripts/`: R scripts
-- `outputs/`: figures and tables
-- `report/`: final actuarial-style report
+## Data
+CDC WONDER Multiple Cause of Death public data. Raw data not included in this repo due to file size. Download from https://wonder.cdc.gov and place in `data/raw/`.
 
-
-### Baseline Comparison
-
-Excess mortality in 2020 was compared against two baselines: the long-term average (2000–2019) and a recent pre-pandemic average (2015–2019). 
-
-Relative to the long-term baseline, the increase in mortality appears modest. However, compared with the recent baseline, the mortality rise in 2020 becomes much more evident. This likely reflects the long-term decline in mortality over the past two decades, meaning older historical data may partially dilute the observed COVID-era mortality shock.
+## Structure
+- `data/raw/` — raw CDC data (not tracked)
+- `data/processed/` — cleaned datasets and model outputs
+- `scripts/` — R scripts 01–07
+- `outputs/` — figures
